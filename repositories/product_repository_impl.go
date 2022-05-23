@@ -22,17 +22,34 @@ func (repository *ProductRepositoryImpl) CreateProduct(product *models.Product) 
 }
 
 func (repository *ProductRepositoryImpl) GetAllProducts() (*[]models.Product, error) {
-	return nil, nil
+	products := []models.Product{}
+	err := repository.DB.Find(&products).Error
+	return &products, err
 }
 
 func (repository *ProductRepositoryImpl) GetProductByID(id uint) (*models.Product, error) {
-	return nil, nil
+	product := models.Product{}
+	err := repository.DB.First(&product, "id=?", id).Error
+
+	return &product, err
 }
 
 func (repository *ProductRepositoryImpl) UpdateProductByID(p *models.Product, id uint) error {
-	return nil
+	product := models.Product{}
+	err := repository.DB.Model(&product).Where("id = ?", id).Updates(
+		models.Product{
+			Name:   p.Name,
+			Brand:  p.Brand,
+			UserID: p.UserID,
+		},
+	).Error
+
+	return err
 }
 
 func (repository *ProductRepositoryImpl) DeleteProductByID(id uint) error {
-	return nil
+	product := models.Product{}
+	err := repository.DB.Where("id=?", id).Delete(&product, id).Error
+
+	return err
 }

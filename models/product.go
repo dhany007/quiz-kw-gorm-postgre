@@ -1,6 +1,9 @@
 package models
 
-import "time"
+import (
+	"fmt"
+	"time"
+)
 
 type Product struct {
 	ID        uint   `gorm:"primaryKey"`
@@ -9,4 +12,11 @@ type Product struct {
 	UserID    uint
 	CreatedAt time.Time
 	UpdatedAt time.Time
+}
+
+func (p *Product) Print() {
+	fmt.Println("ID :", p.ID)
+	fmt.Println("Name :", p.Name)
+	fmt.Println("Brand :", p.Brand)
+	fmt.Println("UserID :", p.UserID)
 }

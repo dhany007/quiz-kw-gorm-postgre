@@ -66,6 +66,9 @@ func tempMain() {
 	}
 	fmt.Println("Deleted user success")
 
+	fmt.Println("\nPRODUCT")
+
+	// created product
 	productRepository := repositories.NewProductRepository(db)
 
 	product1 := models.Product{
@@ -80,4 +83,42 @@ func tempMain() {
 	}
 	fmt.Println("Created product success")
 
+	// get all product
+	fmt.Println("\nGet all products")
+	products, errProducts := productRepository.GetAllProducts()
+	if errProducts != nil {
+		fmt.Println("error: ", errProducts.Error())
+		return
+	}
+
+	for i, product := range *products {
+		fmt.Println("Product ke -", i+1)
+		product.Print()
+		fmt.Println()
+	}
+
+	// get product by id
+	productID := 2
+	fmt.Println("\nGet product ID:", productID)
+	product2, errProduct2 := productRepository.GetProductByID(uint(productID))
+	if errProduct2 != nil {
+		fmt.Println("error:", errProduct2.Error())
+		return
+	}
+	product2.Print()
+
+	// update product
+	productUpdateID := 2
+	fmt.Println("\nUpdate Product id", productUpdateID)
+	productUpdate := models.Product{
+		Name:   "Clear update",
+		Brand:  "kebersihan",
+		UserID: 2,
+	}
+	errProductUpdate := productRepository.UpdateProductByID(&productUpdate, uint(productUpdateID))
+	if errProductUpdate != nil {
+		fmt.Println("error:", errProductUpdate.Error())
+		return
+	}
+	fmt.Println("Updated product success")
 }
