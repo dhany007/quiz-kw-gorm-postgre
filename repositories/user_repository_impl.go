@@ -31,7 +31,14 @@ func (repository *UserRepositoryImpl) GetAllUsers() (*[]models.User, error) {
 
 func (repository *UserRepositoryImpl) GetUserByID(id uint) (*models.User, error) {
 	user := models.User{}
-	err := repository.DB.Find(&user, "id=?", id).Error
+	err := repository.DB.First(&user, "id=?", id).Error
 
 	return &user, err
+}
+
+func (repository *UserRepositoryImpl) UpdateUserByID(user *models.User, id uint) error {
+	u := models.User{}
+	err := repository.DB.Model(&u).Where("id=?", id).Updates(models.User{Email: user.Email}).Error
+
+	return err
 }

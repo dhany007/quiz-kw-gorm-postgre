@@ -44,4 +44,15 @@ func main() {
 	}
 	user2.Print()
 
+	// update user
+	userID = 2
+	fmt.Println("\nUpdate user id", userID)
+	userUpdate := models.User{
+		Email: "andy.update@gmail.com",
+	}
+	errUpdate := userRepository.UpdateUserByID(&userUpdate, uint(userID))
+	if errUpdate != nil {
+		fmt.Println("error:", errUpdate.Error())
+	}
+	fmt.Println("Updated user success")
 }
