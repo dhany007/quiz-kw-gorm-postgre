@@ -14,11 +14,21 @@ func main() {
 	userRepository := repositories.NewUserRepository(db)
 
 	user1 := models.User{
-		Email: "dhany@koinworks.com",
+		Email: "andi@koinworks.com",
 	}
 	errUser1 := userRepository.CreateUser(&user1)
 	if errUser1 != nil {
 		fmt.Println("error:", errUser1.Error())
 	}
 	fmt.Println("Created success")
+
+	users, err := userRepository.GetAllUsers()
+	if err != nil {
+		fmt.Println("error:", err.Error())
+	}
+	for i, user := range *users {
+		fmt.Println("User: ", i+1)
+		user.Print()
+		fmt.Println()
+	}
 }
