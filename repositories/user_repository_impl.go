@@ -30,5 +30,8 @@ func (repository *UserRepositoryImpl) GetAllUsers() (*[]models.User, error) {
 }
 
 func (repository *UserRepositoryImpl) GetUserByID(id uint) (*models.User, error) {
-	return nil, nil
+	user := models.User{}
+	err := repository.DB.Find(&user, "id=?", id).Error
+
+	return &user, err
 }

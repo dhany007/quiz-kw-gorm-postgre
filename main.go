@@ -13,6 +13,7 @@ func main() {
 
 	userRepository := repositories.NewUserRepository(db)
 
+	// created user
 	user1 := models.User{
 		Email: "andi@koinworks.com",
 	}
@@ -22,6 +23,7 @@ func main() {
 	}
 	fmt.Println("Created success")
 
+	// get all user
 	users, err := userRepository.GetAllUsers()
 	if err != nil {
 		fmt.Println("error:", err.Error())
@@ -31,4 +33,15 @@ func main() {
 		user.Print()
 		fmt.Println()
 	}
+
+	// get user by id
+	userID := 2
+	fmt.Println("\nGet user ID:", userID)
+	user2, errUser2 := userRepository.GetUserByID(uint(userID))
+	if errUser2 != nil {
+		fmt.Println("error:", errUser2.Error())
+		return
+	}
+	user2.Print()
+
 }
