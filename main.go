@@ -55,4 +55,15 @@ func main() {
 		fmt.Println("error:", errUpdate.Error())
 	}
 	fmt.Println("Updated user success")
+
+	// delete user
+	userID = 1
+	fmt.Println("\nDelete User ID", userID)
+	errDelete := userRepository.DeleteUserByID(uint(userID))
+	if errDelete != nil {
+		fmt.Println("error:", errDelete.Error())
+		return
+	}
+	fmt.Println("Deleted user success")
+
 }

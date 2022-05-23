@@ -42,3 +42,10 @@ func (repository *UserRepositoryImpl) UpdateUserByID(user *models.User, id uint)
 
 	return err
 }
+
+func (repository *UserRepositoryImpl) DeleteUserByID(id uint) error {
+	u := models.User{}
+	err := repository.DB.Where("id=?", id).Delete(&u).Error
+
+	return err
+}

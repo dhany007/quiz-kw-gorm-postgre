@@ -7,4 +7,5 @@ type UserRepository interface {
 	GetAllUsers() (*[]models.User, error)
 	GetUserByID(id uint) (*models.User, error)
 	UpdateUserByID(user *models.User, id uint) error
+	DeleteUserByID(id uint) error
 }
