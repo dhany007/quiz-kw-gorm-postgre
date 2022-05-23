@@ -11,59 +11,18 @@ func main() {
 	fmt.Println("gorm-postgree")
 	db := database.StartDB()
 
-	userRepository := repositories.NewUserRepository(db)
+	productRepository := repositories.NewProductRepository(db)
 
-	// created user
-	user1 := models.User{
-		Email: "andi@koinworks.com",
+	product1 := models.Product{
+		Name:   "Dove",
+		Brand:  "Wings",
+		UserID: 2,
 	}
-	errUser1 := userRepository.CreateUser(&user1)
-	if errUser1 != nil {
-		fmt.Println("error:", errUser1.Error())
-	}
-	fmt.Println("Created success")
-
-	// get all user
-	users, err := userRepository.GetAllUsers()
-	if err != nil {
-		fmt.Println("error:", err.Error())
-	}
-	for i, user := range *users {
-		fmt.Println("User: ", i+1)
-		user.Print()
-		fmt.Println()
-	}
-
-	// get user by id
-	userID := 2
-	fmt.Println("\nGet user ID:", userID)
-	user2, errUser2 := userRepository.GetUserByID(uint(userID))
-	if errUser2 != nil {
-		fmt.Println("error:", errUser2.Error())
+	errProduct1 := productRepository.CreateProduct(&product1)
+	if errProduct1 != nil {
+		fmt.Println("error:", errProduct1.Error())
 		return
 	}
-	user2.Print()
-
-	// update user
-	userID = 2
-	fmt.Println("\nUpdate user id", userID)
-	userUpdate := models.User{
-		Email: "andy.update@gmail.com",
-	}
-	errUpdate := userRepository.UpdateUserByID(&userUpdate, uint(userID))
-	if errUpdate != nil {
-		fmt.Println("error:", errUpdate.Error())
-	}
-	fmt.Println("Updated user success")
-
-	// delete user
-	userID = 1
-	fmt.Println("\nDelete User ID", userID)
-	errDelete := userRepository.DeleteUserByID(uint(userID))
-	if errDelete != nil {
-		fmt.Println("error:", errDelete.Error())
-		return
-	}
-	fmt.Println("Deleted user success")
+	fmt.Println("Created product success")
 
 }
